@@ -6,9 +6,9 @@ let bot;
 // Function to create and configure the bot
 function createBot() {
   bot = mineflayer.createBot({
-    host: 'imyours1231.aternos.me', // Server IP
-    port: 22382,                    // Server port
-    username: 'demigodbot',         // Bot's name
+    host: 'YOUR SERVER IP', // Server IP
+    port: PORT,                    // Server port
+    username: 'BOT USERNAME',         // Bot's name
     version: '1.16.4'               // Server version
   });
   setupEventListeners(bot);
@@ -18,21 +18,23 @@ function createBot() {
 function setupEventListeners(bot) {
   bot.on('spawn', () => {
     console.log('Bot has spawned in the game.');
-    const password = '12341234'; // Replace with your desired password
+    const password = 'BOT LOGIN PASSWORD'; // Replace with your desired password
 
-    // Send register command
-    bot.chat(`/register demigodbot ${password}`);
-    console.log(`Sent register command: /register demigodbot ${password}`);
+    // Replace 'YOUR_BOT_USERNAME' with your desired bot username
+const botUsername = 'YOUR_BOT_USERNAME'; // Enter your bot's username here
 
-    // Wait for a moment before sending the login command
-    setTimeout(() => {
-      bot.chat(`/login demigodbot ${password}`);
-      console.log(`Sent login command: /login demigodbot ${password}`);
-    }, 2000); // 2 seconds delay
+// Send register command
+bot.chat(`/register ${botUsername} ${password}`);
+console.log(`Sent register command: /register ${botUsername} ${password}`);
 
-    // Start random movement
-    randomMovement();
-  });
+// Wait for a moment before sending the login command
+setTimeout(() => {
+  bot.chat(`/login ${botUsername} ${password}`);
+  console.log(`Sent login command: /login ${botUsername} ${password}`);
+}, 2000); // 2 seconds delay
+
+// Start random movement
+randomMovement();
 
   // Handle chat messages
   bot.on('chat', (username, message) => {
