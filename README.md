@@ -2,6 +2,8 @@
 
 Welcome to the Mineflayer Bot project! This bot connects to a Minecraft server, allows for automated gameplay, and responds to chat commands.
 
+**This bot is created by Demigod.**
+
 ## Table of Contents
 
 - [Features](#features)
@@ -33,23 +35,49 @@ bash
 Copy code
 npm install mineflayer
 Configuration
-Before running the bot, configure the connection settings:
+Before running the bot, you need to configure its settings. Follow these detailed steps:
 
-Open bot.js.
-
-Update the following settings:
-
+Step 1: Open the Configuration File
+Navigate to the bot.js file in your project directory.
+Open bot.js in a text editor (e.g., VSCode, Sublime Text, or Notepad).
+Step 2: Change the Username
+Locate the username field in the bot configuration section:
 javascript
 Copy code
-host: 'your.minecraft.server.ip', // Server IP
-port: your_server_port,             // Server port
-username: 'your_bot_username',      // Bot's name
-version: 'your_minecraft_version'    // Minecraft version
-Set the desired password in the password variable:
-
+username: 'demigodbot', // Bot's name
+Replace 'demigodbot' with your desired username (make sure it's not already taken on the server):
 javascript
 Copy code
-const password = 'your_password_here'; // Bot's password for registration
+username: 'your_new_bot_username',
+Step 3: Update the Server Address
+Find the host field in the configuration:
+javascript
+Copy code
+host: 'imyours1231.aternos.me', // Server IP
+Change the server address to the correct IP or domain of the Minecraft server you wish to connect to:
+javascript
+Copy code
+host: 'your.minecraft.server.ip',
+Step 4: Modify the Server Port
+Look for the port field:
+javascript
+Copy code
+port: 22382, // Server port
+Change the port number to match the port used by your Minecraft server:
+javascript
+Copy code
+port: your_server_port,
+Step 5: Set the Password
+Find the line where the password is set:
+javascript
+Copy code
+const password = '12341234'; // Replace with your desired password
+Replace '12341234' with the password you wish to use for registering the bot:
+javascript
+Copy code
+const password = 'your_secure_password';
+Step 6: Save Your Changes
+After making all the necessary changes, save the bot.js file in your text editor.
 Usage
 To start the bot, simply run:
 
@@ -71,4 +99,4 @@ Contributing
 Contributions are welcome! If you have suggestions for improvements or new features, please feel free to submit a pull request or open an issue.
 
 License
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the LICENSE file for details
