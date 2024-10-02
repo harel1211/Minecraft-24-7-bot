@@ -74,7 +74,7 @@ function randomMovement() {
 function reconnect() {
   console.log('Attempting to reconnect...');
   bot = mineflayer.createBot({
-    host: 'imyours1231.aternos.me',
+    host: 'YOURSERVERIP',
     port: 22382,
     username: botUsername,
     version: '1.16.4'
