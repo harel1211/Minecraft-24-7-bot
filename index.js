@@ -76,7 +76,7 @@ function reconnect() {
   bot = mineflayer.createBot({
     host: 'YOURSERVERIP',
     port: 22382,
-    username: botUsername,
+    username: 'BOTUSERNAME',
     version: '1.16.4'
   });
 
