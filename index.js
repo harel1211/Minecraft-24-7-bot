@@ -1,65 +1,50 @@
 const mineflayer = require('mineflayer');
 
-// Bot variable
-let bot;
+// Define the bot's username and password
+const botUsername = 'Username'; // Your bot's username
+const password = 'password';       // Your bot's password
 
-// Function to create and configure the bot
-function createBot() {
-  bot = mineflayer.createBot({
-    host: 'YOUR SERVER IP', // Server IP
-    port: PORT,                    // Server port
-    username: 'BOT USERNAME',         // Bot's name
-    version: '1.16.4'               // Server version
-  });
-  setupEventListeners(bot);
-}
+let bot = mineflayer.createBot({
+  host: 'SERVER IP', // Server IP
+  port: 19132,                    // Server port
+  username: botUsername,          // Bot's name (do not change here)
+  version: '1.16.4'               // Server version
+});
 
 // Function to set up event listeners for the bot
 function setupEventListeners(bot) {
+  // Bot spawn event
   bot.on('spawn', () => {
     console.log('Bot has spawned in the game.');
-    const password = 'BOT LOGIN PASSWORD'; // Replace with your desired password
 
-    // Replace 'YOUR_BOT_USERNAME' with your desired bot username
-const botUsername = 'YOUR_BOT_USERNAME'; // Enter your bot's username here
+    // Send register command
+    bot.chat(`/register ${botUsername} ${password}`);
+    console.log(`Sent register command: /register ${botUsername} ${password}`);
 
-// Send register command
-bot.chat(`/register ${botUsername} ${password}`);
-console.log(`Sent register command: /register ${botUsername} ${password}`);
+    // Wait for a moment before sending the login command
+    setTimeout(() => {
+      bot.chat(`/login ${botUsername} ${password}`);
+      console.log(`Sent login command: /login ${botUsername} ${password}`);
+    }, 2000); // 2 seconds delay
 
-// Wait for a moment before sending the login command
-setTimeout(() => {
-  bot.chat(`/login ${botUsername} ${password}`);
-  console.log(`Sent login command: /login ${botUsername} ${password}`);
-}, 2000); // 2 seconds delay
-
-// Start random movement
-randomMovement();
+    // Start random movement
+    randomMovement();
+  });
 
   // Handle chat messages
   bot.on('chat', (username, message) => {
     if (username === bot.username) return; // Ignore own messages
 
-    if (message.includes('You are now registered') || message.includes('You are now logged in')) {
-      console.log(message);
-    } else if (message === 'hi') {
+    // Example chat commands
+    if (message === 'hi') {
       bot.chat(`Hello, ${username}!`);
     } else if (message === 'move') {
       bot.setControlState('forward', true);
       setTimeout(() => {
         bot.setControlState('forward', false);
       }, 3000); // Move forward for 3 seconds
-    } else if (message === 'place') {
-      placeBlock(); // Call the function to place a block when 'place' command is received
-    } else if (message === 'dancebot') {
-      dance(); // Call the dance function when 'dancebot' command is received
-    } else if (message.startsWith('tp')) {
-      const targetLocation = message.split(' ')[1];
-      teleportPlayer(username, targetLocation);
-    } else if (message === 'stop') {
-      bot.chat('Shutting down...');
-      bot.quit();
     }
+    // Add more commands as needed
   });
 
   // Error handling
@@ -74,87 +59,29 @@ randomMovement();
   });
 }
 
-// Function to teleport players
-function teleportPlayer(username, targetLocation) {
-  const locations = {
-    home: { x: 312.382, y: 80, z: -926.800 },
-    xpfarm: { x: 641.904, y: -21.000, z: -703.569 },
-  };
-
-  if (targetLocation in locations) {
-    const { x, y, z } = locations[targetLocation];
-    bot.chat(`Teleporting ${username} to ${targetLocation} at (${x}, ${y}, ${z})...`);
-    bot.chat(`/tp ${username} ${x} ${y} ${z}`);
-  } else {
-    bot.chat(`Unknown location: ${targetLocation}`);
-  }
-}
-
-// Function for random movement
+// Function for random movement (example)
 function randomMovement() {
   setInterval(() => {
     const randomDirection = Math.random() < 0.5 ? 'forward' : 'back';
     bot.setControlState(randomDirection, true);
-
-    // Randomly jump
-    if (Math.random() < 0.5) {
-      bot.setControlState('jump', true);
-      setTimeout(() => bot.setControlState('jump', false), 300); // Jump for a short duration
-    }
-
-    // Randomly turn left or right
-    if (Math.random() < 0.5) {
-      bot.setControlState('left', true);
-      setTimeout(() => bot.setControlState('left', false), 1000); // Turn left for 1 second
-    } else {
-      bot.setControlState('right', true);
-      setTimeout(() => bot.setControlState('right', false), 1000); // Turn right for 1 second
-    }
-
-    // Move for 2 seconds
     setTimeout(() => {
       bot.setControlState(randomDirection, false);
     }, 2000);
-    
   }, 5000); // Every 5 seconds
-}
-
-// Function to make the bot dance
-function dance() {
-  for (let i = 0; i < 5; i++) {
-    setTimeout(() => {
-      bot.setControlState('jump', true);
-      setTimeout(() => bot.setControlState('jump', false), 300);
-      bot.setControlState('left', true);
-      setTimeout(() => bot.setControlState('left', false), 300);
-      bot.setControlState('right', true);
-      setTimeout(() => bot.setControlState('right', false), 300);
-    }, i * 1000);
-  }
-}
-
-// Function to place a block
-function placeBlock() {
-  const block = bot.inventory.findInventoryItem(1); // Replace with the ID of the block you want to place
-  if (block) {
-    const position = bot.entity.position.offset(0, -1, 0);
-    bot.placeBlock(position, new mineflayer.Vec3(0, 1, 0), (err) => {
-      if (err) console.log('Error placing block:', err);
-      else console.log('Block placed!');
-    });
-  } else {
-    console.log('No block found in inventory.');
-  }
 }
 
 // Function to reconnect the bot
 function reconnect() {
   console.log('Attempting to reconnect...');
-  if (bot) {
-    bot.quit(); // Quit the current bot
-  }
-  createBot(); // Create a new bot instance
+  bot = mineflayer.createBot({
+    host: 'imyours1231.aternos.me',
+    port: 22382,
+    username: botUsername,
+    version: '1.16.4'
+  });
+
+  setupEventListeners(bot); // Reattach event listeners
 }
 
-// Initial bot creation
-createBot();
+// Initial setup
+setupEventListeners(bot);
